@@ -1,0 +1,377 @@
+﻿<!DOCTYPE html>
+<head>
+<html lang="es_ES" >
+<meta charset="UTF-8" >
+<meta name="author" content="Pol Flórez Viciana" >
+<meta name="owner" content="Pol Flórez Viciana" >
+<meta name="keywords" content="Romano, Número" >
+<title>Calculadora de Número Romano</title>
+<meta name="description" content="Convierte números decimales a números romanos con esta calculadora aplicativa" >
+<meta name="robots" content="index, dofollow" >
+<style>
+	h1 {
+		color: blue;
+	}
+	h2 {
+		color: limegreen;
+	}
+	p {
+		color: white;
+	}
+	section {
+		width: 360px; min-width: 360px;	padding: 10px; background-color: rgba(0,0,0,0.9); position: absolute; top: 50%;	left: 50%; transform: translate(-50%,-50%); 
+	}
+</style>
+</head>
+<body>
+	<center>
+		<h1>Calculadora de Números Romanos</h1>
+		<section id="Pantalla1" style="display: inline-block;">
+			<h2>Introduzca un Número Decimal</h2>
+			
+			<input id="NumeroInput" type="number" value="1" min="1" max="999999" value="" title="Introduzca un Número de 1 a 999.999" onkeyup="CalculaNumeroRomano()" />
+			
+			<!--
+			<input id="BtnConvertir" type="button" value="Convertir" title="Convertir el Número Decimal a Número Romano" onclick="CalculaNumeroRomano()" />
+			-->
+			<input id="BtnAyuda" type="button" value="?" title="Ir a la Ayuda" onclick="MostrarAyuda()" />
+			<p id="NumeroResultado">I</p>
+		</section>
+		<section id="Pantalla2" style="display: none;">
+			<h2>Ayuda: Tabla de Valores de los Números Romanos</h2>
+			<ul style="padding: 0px 30px 0px 30px; color: white; background-color: rgba(0,0,0,0.7);">
+				<li>I = 1</li>
+				<li>V = 5 --> <u>V</u> = 5.000</li>
+				<li>X = 10 --> <u>X</u> = 10.000</li>
+				<li>L = 50 --> <u>L</u> = 50.000</li>
+				<li>C = 100 --> <u>C</u> = 100.000</li>
+				<li>D = 500 --> <u>D</u> = 500.000</li>
+				<li>M = 1.000 --> <u>M</u> = 1.000.000</li>
+			</ul>
+			<input id="BtnConvertidor" type="button" value="Volver" title="Volver al Convertidor de Números Romanos" onclick="MostrarConversor()" />
+		</section>	
+	</center>
+<script>
+const TextoNull = "";
+
+function MostrarAyuda(){
+	document.getElementById("Pantalla1").style = 'display: none; width: 360px; min-width: 360px; padding: 10px; background-color: rgba(0,0,0,0.9); position: absolute; top: 50%;	left: 50%; transform: translate(-50%,-50%); ';
+	document.getElementById("Pantalla2").style = 'display: inline-block; width: 360px; min-width: 360px; padding: 10px; background-color: rgba(0,0,0,0.9); position: absolute; top: 50%;	left: 50%; transform: translate(-50%,-50%); ';
+}	
+
+function MostrarConversor(){
+	document.getElementById("Pantalla1").style = 'display: inline-block; width: 360px; min-width: 360px; padding: 10px; background-color: rgba(0,0,0,0.9); position: absolute; top: 50%;	left: 50%; transform: translate(-50%,-50%); ';
+	document.getElementById("Pantalla2").style = 'display: none; width: 360px; min-width: 360px; padding: 10px; background-color: rgba(0,0,0,0.9); position: absolute; top: 50%;	left: 50%; transform: translate(-50%,-50%); ';
+}
+
+function CalculaNumeroRomano(){
+	var ElNumero = "" + document.getElementById("NumeroInput").value;
+	var Resultado = "";
+	if (EsNumero(ElNumero) == true && ElNumero.length >= 1 && ElNumero.length < 7 ) {
+		var Texto = "" + ElNumero;
+		var x = 0;
+		for (x = 1 ; x <= ElNumero.length ; x++){
+			var Caracter = parseInt(TextoDerecha(Texto,1));
+			Resultado = DevuelveNumeros(x,Caracter) + Resultado ;
+			Texto = TextoIzquierda(ElNumero, ElNumero.length - x);
+		}
+	}
+	if (Resultado != TextoNull){
+		document.getElementById("NumeroResultado").innerHTML = Resultado;
+	}else{
+		document.getElementById("NumeroResultado").innerHTML = "I";
+	}
+}
+
+function DevuelveNumeros(Posicion, Numero){
+	switch(Posicion) {
+	  case 1:
+		switch(Numero) {
+			case 0:
+				return "";
+			break;
+			case 1:
+				return "I";
+			break;
+			case 2:
+				return "II";
+			break;
+			case 3:
+				return "III";
+			break;
+			case 4:
+				return "IV";
+			break;
+			case 5:
+				return "V";
+			break;
+			case 6:
+				return "VI";
+			break;
+			case 7:
+				return "VII";
+			break;
+			case 8:
+				return "VIII";
+			break;
+			case 9:
+				return "IX";
+			break;
+			default:
+			return "";
+		}
+	  break;
+	  case 2:
+		switch(Numero) {
+			case 0:
+				return "";
+			break;
+			case 1:
+				return "X";
+			break;
+			case 2:
+				return "XX";
+			break;
+			case 3:
+				return "XXX";
+			break;
+			case 4:
+				return "XL";
+			break;
+			case 5:
+				return "L";
+			break;
+			case 6:
+				return "LX";
+			break;
+			case 7:
+				return "LXX";
+			break;
+			case 8:
+				return "LXXX";
+			break;
+			case 9:
+				return "XC";
+			break;
+			default:
+			return "";
+		}
+		break;
+		case 3:
+		switch(Numero) {
+			case 0:
+				return "";
+			break;
+			case 1:
+				return "C";
+			break;
+			case 2:
+				return "CC";
+			break;
+			case 3:
+				return "CCC";
+			break;
+			case 4:
+				return "CD";
+			break;
+			case 5:
+				return "D";
+			break;
+			case 6:
+				return "DC";
+			break;
+			case 7:
+				return "DCC";
+			break;
+			case 8:
+				return "DCCC";
+			break;
+			case 9:
+				return "CM";
+			break;
+			default:
+			return "";
+		}
+		break;
+		case 4:
+		switch(Numero) {
+			case 0:
+				return "";
+			break;
+			case 1:
+				return "M";
+			break;
+			case 2:
+				return "MM";
+			break;
+			case 3:
+				return "MMM";
+			break;
+			case 4:
+				return "M<u>V</u>";
+			break;
+			case 5:
+				return "<u>V</u>";
+			break;
+			case 6:
+				return "<u>V</u>M";
+			break;
+			case 7:
+				return "<u>V</u>MM";
+			break;
+			case 8:
+				return "<u>V</u>MMM";
+			break;
+			case 9:
+				return "M<u>X</u>";
+			break;
+			default:
+			return "";
+		}
+		break;
+		case 5:
+		switch(Numero) {
+			case 0:
+				return "";
+			break;
+			case 1:
+				return "<u>X</u>";
+			break;
+			case 2:
+				return "<u>XX</u>";
+			break;
+			case 3:
+				return "<u>XXX</u>";
+			break;
+			case 4:
+				return "<u>XL</u>";
+			break;
+			case 5:
+				return "<u>L</u>";
+			break;
+			case 6:
+				return "<u>LX</u>";
+			break;
+			case 7:
+				return "<u>LXX</u>";
+			break;
+			case 8:
+				return "<u>LXXX</u>";
+			break;
+			case 9:
+				return "<u>XC</u>";
+			break;
+			default:
+			return "";
+		}
+		break;
+		case 6:
+		switch(Numero) {
+			case 0:
+				return "";
+			break;
+			case 1:
+				return "<u>C</u>";
+			break;
+			case 2:
+				return "<u>CC</u>";
+			break;
+			case 3:
+				return "<u>CCC</u>";
+			break;
+			case 4:
+				return "<u>CD</u>";
+			break;
+			case 5:
+				return "<u>D</u>";
+			break;
+			case 6:
+				return "<u>DC</u>";
+			break;
+			case 7:
+				return "<u>DCC</u>";
+			break;
+			case 8:
+				return "<u>DCCC</u>";
+			break;
+			case 9:
+				return "<u>CM</u>";
+			break;
+			default:
+			return "";	
+		}
+		break;
+	  default:
+		return "";
+	}
+}
+
+function EsNumero(Texto){
+	var EsNumero = false;
+	var EsReal = false;
+	var i;
+	var ElNumero = "" + Texto;
+	for (i = 1; i <= Texto.length; i++){
+		var T = TextoDerecha(ElNumero, 1);
+		if (parseInt(T) == 0 || parseInt(T) == 1 || parseInt(T) == 2 || parseInt(T) == 3 || parseInt(T) == 4 || parseInt(T) == 5 || parseInt(T) == 6 || parseInt(T) == 7 || parseInt(T) == 8 || parseInt(T) == 9 ){
+			EsNumero = true;
+		}else{
+			if (EsReal == false && T == ",") {
+				EsNumero = true;
+				EsReal = true;
+			}else{
+				EsNumero = false;
+				break;
+			}
+		}
+		ElNumero = TextoIzquierda(Texto, Texto.length - i );
+	}
+	if (TextoIzquierda(Texto, 1) == "," || TextoDerecha(Texto, 1) == "," || EsReal == true) {
+		return false;
+	}else{
+		return EsNumero;
+	}
+}
+
+function LongitudTexto(Texto){
+	return Texto.length;
+}
+
+function TextoIzquierda(Texto,Longitud){
+	var Resultado = TextoNull;
+	if (Texto == TextoNull ){
+		Resultado = TextoNull;
+	}else{
+		if (typeof(Longitud) != "number"){
+			Resultado = TextoNull;
+		}else{
+			if ( Texto.length <= Longitud ){
+				Resultado = Texto;
+			}else{
+				Resultado = Texto.substring(0, Longitud);
+			}	
+		}	
+	}
+	return Resultado;
+}
+
+function TextoDerecha(Texto,Longitud){
+	var Resultado = TextoNull;
+	if (Texto == TextoNull ){
+		Resultado = TextoNull;
+	}else{
+		if (typeof(Longitud) != "number"){
+			Resultado = TextoNull;
+		}else{
+			if ( Texto.length <= Longitud ){
+				Resultado = Texto;
+			}else{
+				Resultado = Texto.substring(Texto.length - Longitud, Texto.length);
+			}
+		}	
+	}
+	return Resultado;
+}
+</script>	
+</body>
+</html>
