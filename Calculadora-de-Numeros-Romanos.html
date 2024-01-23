@@ -5,7 +5,7 @@
 <meta name="author" content="Pol Flórez Viciana" >
 <meta name="owner" content="Pol Flórez Viciana" >
 <meta name="keywords" content="Romano, Número" >
-<title>Calculadora de Número Romano</title>
+<title>Calculadora de Números Romanos</title>
 <meta name="description" content="Convierte números decimales a números romanos con esta calculadora aplicativa" >
 <meta name="robots" content="index, dofollow" >
 <style>
@@ -27,14 +27,21 @@
 	<center>
 		<h1>Calculadora de Números Romanos</h1>
 		<section id="Pantalla1" style="display: inline-block;">
+			<input id="BtnAyuda" type="button" value="?" title="Ir a la Ayuda" onclick="MostrarAyuda()" />
+
 			<h2>Introduzca un Número Decimal</h2>
 			
-			<input id="NumeroInput" type="number" value="1" min="1" max="999999" value="" title="Introduzca un Número de 1 a 999.999" onkeyup="CalculaNumeroRomano()" />
+			<input id="NumeroInput" type="number" value="1" min="1" max="999999" title="Introduzca un Número de 1 a 999.999" onkeyup="CalculaNumero()" />
+			<br><br>
 			
-			<!--
-			<input id="BtnConvertir" type="button" value="Convertir" title="Convertir el Número Decimal a Número Romano" onclick="CalculaNumeroRomano()" />
-			-->
-			<input id="BtnAyuda" type="button" value="?" title="Ir a la Ayuda" onclick="MostrarAyuda()" />
+			<h2>Introduzca un Número Romano</h2>
+			
+			<input id="RomanoInput" type="text" value="" title="Introduzca un Número Romano" onkeyup="CalculaRomano()" />
+			
+			<br><br>
+			
+			<h2>Resultado Obtenido</h2>
+			
 			<p id="NumeroResultado">I</p>
 		</section>
 		<section id="Pantalla2" style="display: none;">
@@ -47,6 +54,7 @@
 				<li>C = 100 --> <u>C</u> = 100.000</li>
 				<li>D = 500 --> <u>D</u> = 500.000</li>
 				<li>M = 1.000 --> <u>M</u> = 1.000.000</li>
+				<li>Letras Subrayadas con Etiqueta HTML U</li>
 			</ul>
 			<input id="BtnConvertidor" type="button" value="Volver" title="Volver al Convertidor de Números Romanos" onclick="MostrarConversor()" />
 		</section>	
@@ -64,8 +72,36 @@ function MostrarConversor(){
 	document.getElementById("Pantalla2").style = 'display: none; width: 360px; min-width: 360px; padding: 10px; background-color: rgba(0,0,0,0.9); position: absolute; top: 50%;	left: 50%; transform: translate(-50%,-50%); ';
 }
 
-function CalculaNumeroRomano(){
+function CalculaNumero(){
 	var ElNumero = "" + document.getElementById("NumeroInput").value;
+	document.getElementById("NumeroResultado").innerHTML = CalculaNumeroRomano(ElNumero);
+}
+
+function CalculaRomano(){
+	var ElTexto = "" + document.getElementById("RomanoInput").value;
+	//ElTexto = ElTexto.toUpperCase();
+	document.getElementById("NumeroResultado").innerHTML = CalculaTextoRomano(ElTexto);
+}
+
+function CalculaTextoRomano(ElTexto){
+	var Resultado = "1";
+	for ( i = 1 ; i <= 999999; i++ ){
+		if (CalculaNumeroRomano("" + i) == ElTexto){
+			Resultado = "" + i;
+			break;
+		}	
+	}
+	if (Resultado != TextoNull){
+		return Resultado;
+	}else{
+		return "0";
+	}
+}
+
+
+
+function CalculaNumeroRomano(ElNumero){
+	//var ElNumero = "" + document.getElementById("NumeroInput").value;
 	var Resultado = "";
 	if (EsNumero(ElNumero) == true && ElNumero.length >= 1 && ElNumero.length < 7 ) {
 		var Texto = "" + ElNumero;
@@ -77,9 +113,9 @@ function CalculaNumeroRomano(){
 		}
 	}
 	if (Resultado != TextoNull){
-		document.getElementById("NumeroResultado").innerHTML = Resultado;
+		return Resultado;
 	}else{
-		document.getElementById("NumeroResultado").innerHTML = "I";
+		return "I";
 	}
 }
 
